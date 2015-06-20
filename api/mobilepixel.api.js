@@ -14,3 +14,10 @@ server.on('connection', facade.onConnection);
 // TODO: admin
 
 // TODO: add a RESTful API to collect client-side exceptions and log them
+
+//process.nextTick()
+
+
+
+// some n milliseconds we should -
+// - get the frame and send it

@@ -8,7 +8,6 @@ var controller = require('./mobilepixel.controller');
 
 module.exports = function (server, debug) {
 
-
     //close
     //Fired when the client is disconnected.
     //    Arguments
@@ -43,11 +42,14 @@ module.exports = function (server, debug) {
             action: "setColor",
             params: { color: "red"}
         };
-        socket.send(JSON.stringify(testAction));
+
+        controller.refresh(Object.keys(server.clients).length);
+        //socket.send(JSON.stringify(testAction));
     }
 
     return {
         onConnection: function (socket) {
+            controller.setServer(server);
 
             socket.on('close', _onClose);
             socket.on('error', _onError);
