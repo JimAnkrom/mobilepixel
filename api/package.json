@@ -1,0 +1,13 @@
+{
+  "name": "mobilepixel-api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "mobilepixel.api.js",
+  "dependencies": {
+    "engine.io": "^1.5.1",
+    "tween.js": "^0.14.0"
+  },
+  "devDependencies": {},
+  "author": "Jim Ankrom (arctanone@gmail.com)",
+  "license": "MIT"
+}
