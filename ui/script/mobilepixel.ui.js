@@ -40,9 +40,20 @@ var pixel = {
         setColor: function (params) {
             elements.body.style.backgroundColor = params.color;
         },
-        setImage: function () {}
+        setImage: function () {},
+        transition: function (params) {
+            // move from one color to the next via certain parameters
+
+        },
+        drawSquare: function () {},
+        animatedStar: function () {},
+        takePhoto: function () {
+            // should upload the photo to the server
+        },
+        // last priority
+        recordAudio: function () {}
+        // blink
     }
     // animate
     //
 };
-
