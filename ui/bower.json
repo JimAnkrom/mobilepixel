@@ -1,0 +1,22 @@
+{
+  "name": "mobilepixel-ui",
+  "version": "0.1.0",
+  "homepage": "https://github.com/JimAnkrom/mobilepixel",
+  "authors": [
+    "Jim Ankrom <arctanone@gmail.com>"
+  ],
+  "description": "mobile device pixel",
+  "moduleType": [
+    "es6"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "engine.io": "~1.5.1"
+  }
+}
