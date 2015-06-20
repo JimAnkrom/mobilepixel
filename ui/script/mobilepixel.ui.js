@@ -10,6 +10,13 @@ var connCfg = {
 // TODO: Socket should just accept a cfg object of event handlers and configuration
 
 var mobilePixel = (function (config) {
+    function _onMessage (msg) {
+        var message = JSON.parse(msg);
+        var action = pixel.actions[message.action];
+        if (action) {
+            action(message.params);
+        }
+    }
 
     //var conn = new sway.Socket({
     //    onMessage: function (message) {
@@ -22,7 +29,8 @@ var mobilePixel = (function (config) {
     //});
 
     var conn = new sway.Socket(connCfg);
-    conn.connect();
+    conn.onMessage.add(_onMessage);
+    //conn.connect();
 
     return {
         conn: conn
@@ -31,7 +39,6 @@ var mobilePixel = (function (config) {
 
 // cache all elements here
 var elements = {
-    body: document.getElementsByName('body')[0]
 };
 
 // pixel actions
@@ -56,4 +63,9 @@ var pixel = {
     }
     // animate
     //
+};
+
+window.onload = function () {
+    elements.body = document.body;
+    mobilePixel.conn.connect();
 };

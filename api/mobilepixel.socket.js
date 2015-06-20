@@ -33,11 +33,17 @@ module.exports = function (server, debug) {
     //Fired when the client sends a message.
     //    Arguments
     //String or Buffer: Unicode string or Buffer with binary contents
-    function _onMessage (message) {}
+    function _onMessage (message) {
+
+    }
 
     function _onConnect (socket) {
-        socket.send('hello world');
-        socket.send('col|red');
+        //socket.send('hello world');
+        var testAction = {
+            action: "setColor",
+            params: { color: "red"}
+        };
+        socket.send(JSON.stringify(testAction));
     }
 
     return {
