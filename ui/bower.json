@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "engine.io": "~1.5.1"
+    "engine.io": "~1.5.1",
+    "tweenjs": "*"
   }
 }

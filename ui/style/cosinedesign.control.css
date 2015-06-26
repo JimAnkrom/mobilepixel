@@ -1,0 +1,124 @@
+body {
+    background-color: black;
+    color: white;
+}
+.square {
+    float: left;
+    height: 40px;
+    width: 40px;
+    font-size: 10pt;
+    display: inline-block;
+    margin: 2px;
+}
+
+.beat {
+    background-color: #FFFF00 !important;
+}
+#tempoDisplay {
+    font-size: 0;
+}
+#barSelector {
+    display: block;
+    float: left;
+    clear: both;
+    background-color: #000088;
+}
+#tapTempo {
+    background-color: #009900;
+}
+#cur {  }
+#avg {  }
+#cum {  }
+
+.header {
+    float: right;
+}
+.content {
+    clear: both;
+}
+/* XOX-like step sequencer */
+.xox {
+    width: 578px;
+    display: block;
+    font-size: 0;
+}
+.xox #sidebar {
+    display: block;
+    float: left;
+    white-space:nowrap;
+    word-spacing:0;
+}
+.xox #sidebar .edit {
+    float: left;
+    clear: both;
+    margin: 2px 2px 2px 2px;
+    width: 30px;
+    height: 30px;
+    background-color: #666666;
+}
+.xox #sidebar .edit.add {
+    float: left;
+    clear: both;
+    text-align: center;
+    margin: 2px 2px 2px 2px;
+    width: 30px;
+    height: 30px;
+    font-size: 10pt;
+    background-color: #FF6633;
+}
+.xox #sidebar .edit.on {
+    background-color: #999999;
+}
+.xox .display {
+
+}
+.xox .channel {
+    display: inline-block;
+    white-space: nowrap;
+    word-spacing: 0;
+
+}
+
+.xox .display .action {
+    display: inline-block;
+    margin: 2px 2px 2px 2px;
+    width: 132px;
+    height: 30px;
+    background-color: #00FF00;
+}
+.xox .display .action.spacer {
+    background-color: #333333;
+}
+.xox .button {
+    display: inline-block;
+    margin: 2px 2px 2px 2px;
+    width: 30px;
+    height: 30px;
+}
+
+.one.on {
+    background-color: #ffffff;
+}
+.one {
+    background-color: #666666;
+}
+.two.on {
+    background-color: #FFFF00;
+}
+.two {
+    background-color: #666600;
+}
+.three.on {
+    background-color: #FF6600;
+}
+.three {
+    background-color: #663300;
+}
+.four.on {
+    background-color: #FF0000;
+}
+.four {
+    background-color: #660000;
+}
+
+
