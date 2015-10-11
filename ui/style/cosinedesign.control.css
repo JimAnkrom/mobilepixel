@@ -1,6 +1,14 @@
 body {
     background-color: black;
+    font-family: arial;
     color: white;
+}
+#debug {
+    display: block;
+    clear: both;
+}
+.outline {
+    border: 1px solid red;
 }
 .square {
     float: left;
@@ -10,18 +18,21 @@ body {
     display: inline-block;
     margin: 2px;
 }
-
+.label {
+    font-size: 10pt;
+}
 .beat {
     background-color: #FFFF00 !important;
 }
 #tempoDisplay {
     font-size: 0;
+    display: inline-block;
 }
 #barSelector {
     display: block;
     float: left;
     clear: both;
-    background-color: #000088;
+    /* background-color: #000088; */
 }
 #tapTempo {
     background-color: #009900;
@@ -36,10 +47,24 @@ body {
 .content {
     clear: both;
 }
+.footer {
+}
+.row {
+    clear: both;
+    margin: 2px;
+}
+.column {
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
 /* XOX-like step sequencer */
 .xox {
     width: 578px;
-    display: block;
+    display: inline-block;
     font-size: 0;
 }
 .xox #sidebar {
@@ -121,4 +146,38 @@ body {
     background-color: #660000;
 }
 
+.preset {
+    font-size: 12px;
+    width: 250px;
+    height: 26px;
+    margin: 2px;
+}
 
+/* Tab Control */
+.tab {
+    border: 0 #009900;
+    display: inline-block;
+    float: left;
+    width: 50px;
+}
+.tab.strip {
+    display: inline;
+    clear: both;
+    border: 1px solid #009900;
+    border-bottom-width: 0;
+}
+.tab.on {
+    border: 1px solid #009900;
+    border-bottom-width: 0;
+}
+.tab.control {}
+.tab.header {}
+.tab.bar {}
+.tab.bar .button {}
+.tab.panel {
+    display: inline-block;
+    float: left;
+    clear: both;
+    border: 1px solid #009900;
+    border-top-width: 0;
+}

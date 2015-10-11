@@ -6,33 +6,45 @@
     <title></title>
 </head>
 <body>
-    <script src="lib/cosinedesign.control.js"></script>
 
-<div class="xox">
-    <div class="header">
-        <div id="barSelector">
-            <div class="square one"></div>
-            <div class="square two"></div>
-            <div class="square three"></div>
-            <div class="square four"></div>
+    <script src="lib/dat.gui/build/dat.gui.js"></script>
+    <script src="lib/cosinedesign/sequencer/cosinedesign.control.js"></script>
+
+    <div class="xox border">
+        <div class="header">
+            <div id="barSelector">
+                <div class="square one"></div>
+                <div class="square two"></div>
+                <div class="square three"></div>
+                <div class="square four"></div>
+            </div>
+        </div>
+        <div class="content">
+            <div id="sidebar"></div>
+            <div class="display"></div>
+            <div class="button one"></div><div class="button one"></div><div class="button one"></div><div class="button one"></div><div class="button two"></div><div class="button two"></div><div class="button two"></div><div class="button two"></div><div class="button three"></div><div class="button three"></div><div class="button three"></div><div class="button three"></div><div class="button four"></div><div class="button four"></div><div class="button four"></div><div class="button four"></div>
+        </div>
+        <div class="footer">
+            <div id="tempoDisplay">
+                <div id="tapTempo" class="square">120</div>
+                <div id="cur" class="square bpm"></div>
+                <div id="avg" class="square bpm"></div>
+                <div id="cum" class="square bpm"></div>
+            </div>
         </div>
     </div>
-    <div class="content">
-        <div id="sidebar"></div>
-        <div class="display"></div>
-        <div class="button one"></div><div class="button one"></div><div class="button one"></div><div class="button one"></div><div class="button two"></div><div class="button two"></div><div class="button two"></div><div class="button two"></div><div class="button three"></div><div class="button three"></div><div class="button three"></div><div class="button three"></div><div class="button four"></div><div class="button four"></div><div class="button four"></div><div class="button four"></div>
-    </div>
-    <div class="footer">
-        <div class="transport"></div>
-        <div id="tempoDisplay">
-            <div id="tapTempo" class="square">120</div>
-            <div id="cur" class="square bpm"></div>
-            <div id="avg" class="square bpm"></div>
-            <div id="cum" class="square bpm"></div>
-        </div>
-    </div>
-</div>
 
+    <div class="transport"></div>
+
+    <div id="actionTabs" class="container">
+        <div class="tab strip">
+            <div id="tabList" class="tab on">List</div><div id="tabEdit" class="tab">Edit</div>
+        </div>
+        <div id="presetPicker" class="tab panel"></div>
+        <div id="presetEditor" class="tab panel"></div>
+    </div>
+
+    <p></p>
 
     <div id='debug'></div>
     <!-- button to tap tempo -->

@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "engine.io": "~1.5.1",
-    "tweenjs": "*"
+    "tweenjs": "*",
+    "bootstrap": "~3.3.5"
   }
 }

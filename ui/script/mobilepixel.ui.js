@@ -3,7 +3,7 @@
  */
 var connCfg = {
     delimit: '|',
-    socketAddress: '192.168.1.8:8000'
+    socketAddress: '192.168.1.7:8000'
 };
 
 // control
@@ -12,9 +12,9 @@ var connCfg = {
 var mobilePixel = (function (config) {
     function _onMessage (msg) {
         var message = JSON.parse(msg);
-        var action = pixel.actions[message.action];
+        var action = pixel.actions[message.name];
         if (action) {
-            action(message.params);
+            action(message.options);
         }
     }
 
