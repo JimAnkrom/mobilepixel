@@ -42,7 +42,7 @@ module.exports = function (server, debug) {
             action: "setColor",
             params: { color: "red"}
         };
-
+        // TODO: create a startup action sequence - takePicture?
         controller.refresh(Object.keys(server.clients).length);
         //socket.send(JSON.stringify(testAction));
     }
