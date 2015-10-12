@@ -47,7 +47,7 @@ app.use(bodyParser.json({ type: 'text/plain' }));
 // TODO: Sequencer API
 // Pattern resource
 app.post(config.api.pattern, function (req, res) {
-    //log(JSON.stringify(req.body));
+    log(JSON.stringify(req.body));
     log('New Pattern Uploaded.');
     controller.setPattern(req.body);
     res.end();

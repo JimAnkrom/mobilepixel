@@ -34,16 +34,19 @@ module.exports = (function () {
     // a frame is an array of actions for each channel
     function compilePattern(pattern) {
         var i, j, k, barCount, seqCount, stepCount;
-        var bar, sequence, step, frame, action, channel, stepOffset, offsetStep;
+        var BAR_STEP_COUNT = 16,
+            bar, sequence, step, frame, action, channel, stepOffset, offsetStep;
         var temp = {
+            length: 0,
             frames: {}
         };
 
         // for each bar in bars
         barCount = pattern.length;
+        temp.length = barCount * BAR_STEP_COUNT;
         for (i=0; i<barCount; i++) {
             bar = pattern[i];
-            stepOffset = i * 16;
+            stepOffset = i * BAR_STEP_COUNT;
             seqCount = bar.sequences.length;
             // each sequence in sequences
             for (j=0; j<seqCount; j++) {
@@ -79,7 +82,11 @@ module.exports = (function () {
                         o: step.options
                     });
                     frame[j] = frameItem;
-
+                    //if (!frame.length) {
+                    //    frame.length = 1
+                    //} else {
+                    //    frame.length++;
+                    //}
                 }
             }
         }
@@ -182,8 +189,9 @@ module.exports = (function () {
         //var currentAction = activeSequence.frames[currentFrame];
         // reset frame counter
         //if (currentFrame < frameBuffer.length - 1) {
-        if (currentFrame < activeSequence.frames.length - 1) {
-                currentFrame++;
+
+        if (currentFrame < activeSequence.length - 1) {
+            currentFrame++;
         } else {
             currentFrame = 0;
             _sequenceEnd();
