@@ -12,9 +12,9 @@ var connCfg = {
 var mobilePixel = (function (config) {
     function _onMessage (msg) {
         var message = JSON.parse(msg);
-        var action = pixel.actions[message.name];
+        var action = pixel.actions[message.t]; // t = type
         if (action) {
-            action(message.options);
+            action(message.o); // o = options
         }
     }
 

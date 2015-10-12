@@ -34,15 +34,16 @@ module.exports = (function () {
     // a frame is an array of actions for each channel
     function compilePattern(pattern) {
         var i, j, k, barCount, seqCount, stepCount;
-        var bar, sequence, step, frame, action, channel;
+        var bar, sequence, step, frame, action, channel, stepOffset, offsetStep;
         var temp = {
             frames: {}
         };
 
         // for each bar in bars
-        barCount = pattern.bars.length;
+        barCount = pattern.length;
         for (i=0; i<barCount; i++) {
-            bar = pattern.bars[i];
+            bar = pattern[i];
+            stepOffset = i * 16;
             seqCount = bar.sequences.length;
             // each sequence in sequences
             for (j=0; j<seqCount; j++) {
@@ -51,26 +52,34 @@ module.exports = (function () {
                 stepCount = sequence.length;
                 for (k=0; k<stepCount; k++) {
                     step = sequence[k];
-
+                    offsetStep = step.step + stepOffset;
                     // TODO: you MUST have a frame for each step/tick, even if it's empty
                     // TODO: fix above requirement to have a frame... so you don't have to
 
+                    // fixme: When we reset bars, the steps all reset to 1-16
+
                     // find or add a frame to output
-                    frame = temp.frames[step.step];
+                    frame = temp.frames[offsetStep];
                     if (!frame) {
                         frame = {};
-                        temp.frames[step.step] = frame;
+                        temp.frames[offsetStep] = frame;
                     }
-                    var action = step.action;
-                    action.length = step.length;
-                    // TODO: copy info from step into frame, and stringify it
+                    //var action = step.action;
+                    //action.l = step.length;
+                    // copy info from step into frame, and stringify it
 
                     // TODO: Potential bug here!!! Need to ensure that bar.sequences ALWAYS has the same number of sequence data items
                     // because we are using j - the sequence index - as the sequence ID, and hence, the "channel".
                     // NOTE: You DO NOT need to have channel data within a frame - ONLY if you're sending something to that channel!
                     // TODO: allow sequence to have a channel id? Or re-map the channel later?
 
-                    frame[j] = JSON.stringify(action);
+                    var frameItem = JSON.stringify({
+                        l: step.length,
+                        t: step.type,
+                        o: step.options
+                    });
+                    frame[j] = frameItem;
+
                 }
             }
         }
@@ -78,7 +87,6 @@ module.exports = (function () {
         // TODO: Convert temp.frames and frame data into actual arrays - or perf test the assoc. array idea
 
         return temp;
-
     }
 
     // TODO: Compress the pattern for lower latency (send less bytes)
@@ -98,27 +106,33 @@ module.exports = (function () {
         frames: [
             {
                 step: 0,
-                0: '{"length":4,"name":"setColor","options":{"color":"#FF0000"}}',
-                1: '{"length":4,"name":"setColor","options":{"color":"#FFFF00"}}',
-                2: '{"length":4,"name":"setColor","options":{"color":"#FF00FF"}}',
-                3: '{"length":4,"name":"setColor","options":{"color":"#FF0000"}}'
+                0: '{"l":4,"t":"setColor","o":{"color":"#FF0000"}}',
+                1: '{"l":4,"t":"setColor","o":{"color":"#FFFF00"}}',
+                2: '{"l":4,"t":"setColor","o":{"color":"#FF00FF"}}',
+                3: '{"l":4,"t":"setColor","o":{"color":"#FF0000"}}'
             },
             {
                 step: 1,
-                0: '{"length":4,"name":"setColor","options":{"color":"#FF33FF"}}',
-                1: '{"length":4,"name":"setColor","options":{"color":"#FFFFFF"}}',
-                2: '{"length":4,"name":"setColor","options":{"color":"#FF0000"}}',
-                3: '{"length":4,"name":"setColor","options":{"color":"#FF00FF"}}'
+                0: '{"l":4,"t":"setColor","o":{"color":"#FF33FF"}}',
+                1: '{"l":4,"t":"setColor","o":{"color":"#FFFFFF"}}',
+                2: '{"l":4,"t":"setColor","o":{"color":"#FF0000"}}',
+                3: '{"l":4,"t":"setColor","o":{"color":"#FF00FF"}}'
             }
         ]
     };
 
-    var frameBuffer = _refreshAnimation(1);
-    var currentFrame = 0;
-    var timeoutHandle;
-    var clock = {
-        interval: 500
-    };
+    var frameBuffer = _refreshAnimation(1),
+        nextSequence,
+        currentFrame = 0,
+        timeoutHandle,
+        clock = {
+            interval: 500
+        };
+
+    function _setPattern(pattern) {
+        nextSequence = compilePattern(pattern);
+        // TODO: when the current sequence completes, load this
+    }
 
 
     function _eachClient(callback) {
@@ -172,9 +186,11 @@ module.exports = (function () {
                 currentFrame++;
         } else {
             currentFrame = 0;
+            _sequenceEnd();
         }
         // TODO: prepare the next frame for sending
         // like, pre-stringify each action!
+        // TODO: pre-stringify long before here, please. ;)
         nextFrame = activeSequence.frames[currentFrame];
 
         // and set a timeout when to call this next
@@ -182,6 +198,14 @@ module.exports = (function () {
         //      so use interval instead
 
         timeoutHandle = setTimeout(_sendNext, clock.interval);
+    }
+
+    function _sequenceEnd() {
+        if (nextSequence) {
+            activeSequence = nextSequence;
+            if (debug) console.log('New Pattern Changed');
+            nextSequence = null;
+        }
     }
 
     return {
@@ -192,6 +216,7 @@ module.exports = (function () {
                 _sendNext();
             }
         },
+        setPattern: _setPattern,
         refresh: _refreshAnimation,
         sendFrame: _sendFrame
     };

@@ -1,12 +1,13 @@
 /**
  * Created by jim ankrom on 6/13/2015.
  */
-    var port = 8000,
+var port = 8000,
+    apiPort = 7000,
     debug = true;
 var engine = require('engine.io');
 var server = engine.listen(port);
 var facade = require('./mobilepixel.socket')(server, debug);
-
+var controller = require('./mobilepixel.controller');
 var config = require('./mobilepixel.config'),
     express = require('express'),
     bodyParser = require('body-parser');
@@ -46,7 +47,9 @@ app.use(bodyParser.json({ type: 'text/plain' }));
 // TODO: Sequencer API
 // Pattern resource
 app.post(config.api.pattern, function (req, res) {
-    log(JSON.stringify(req));
+    //log(JSON.stringify(req.body));
+    log('New Pattern Uploaded.');
+    controller.setPattern(req.body);
     res.end();
 });
 
@@ -69,12 +72,33 @@ app.get(config.api.channels, function (req, res) {
 
     res.status(200).json(response);
 });
-//
 
+function logErrors(err, req, res, next) {
+    log(err.stack);
+    next(err);
+}
 
+function clientErrorHandler(err, req, res, next) {
+    if (req.xhr) {
+        res.status(500).send({ error: 'Something blew up!', error: err  });
+    } else {
+        next(err);
+    }
+}
 
+function errorHandler(err, req, res, next) {
+    res.status(500);
+    //res.render('error', { error: err });
+    res.end();
+}
 
+// Error handling
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
 
+console.log('Starting server on port ' + apiPort + '...');
+var httpServer = app.listen(apiPort);
 
 
 // TODO: error handling
